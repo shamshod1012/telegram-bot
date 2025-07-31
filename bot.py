@@ -34,10 +34,10 @@ def start(message):
     if not check_sub(user_id):
         markup = types.InlineKeyboardMarkup()
         # === 2. Telegram tugmalarini yaratishda to‘g‘ri URL ishlating
-for ch in channels:
-    # @ belgisini olib tashlab linkga aylantiramiz
-    channel_link = f"https://t.me/{ch.lstrip('@')}"
-    markup.add(types.InlineKeyboardButton(f"📢 Obuna bo'lish", url=channel_link))
+        for ch in channels:
+            # @ belgisini olib tashlab linkga aylantiramiz
+            channel_link = f"https://t.me/{ch.lstrip('@')}"
+            markup.add(types.InlineKeyboardButton(f"📢 Obuna bo'lish", url=channel_link))
 
         for link in external_links:
             markup.add(types.InlineKeyboardButton("📢 Obuna bo'lish", url=link))    
