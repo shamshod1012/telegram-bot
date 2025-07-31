@@ -28,7 +28,7 @@ def start(message):
     if not check_sub(user_id):
         markup = types.InlineKeyboardMarkup()
         for ch in channels:
-            markup.add(types.InlineKeyboardButton(f"Obuna bo'lish: {ch}", url=fch[1:]) )
+            markup.add(types.InlineKeyboardButton(f"Obuna bo'lish: {ch}", url=ch))
         markup.add(types.InlineKeyboardButton("✅ Tekshirish", callback_data="check"))
         bot.send_message(user_id, "📌 Iltimos, quyidagi kanallarga obuna bo'ling va tekshiring.", reply_markup=markup)
     else:
