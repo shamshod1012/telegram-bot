@@ -7,7 +7,9 @@ BOT_TOKEN = '7808954491:AAE7vqeM4esMKv2S6SLhdsDyG-i-20FOMjQ'
 bot = telebot.TeleBot(BOT_TOKEN)
 
 admin_ids = [7770409627, 1225264753]  # bu yerga adminlar ID sini yozing
-channels = ['https://t.me/MuXa_pro_uzakaunt', "https://t.me/somethingcoolOk"]  # majburiy obuna kanallar ro'yxati
+# === 1. Majburiy obuna bo'lish uchun Faqat @username formatida yozing
+channels = ['@MuXa_pro_uzakaunt', '@somethingcoolOk']
+
 kino_dict = {}  # kinolar ro'yxati {"1": {"file_id": ..., "caption": ...}, ...}
 external_links = [
     "https://www.instagram.com/tarjima_kinolar02?igsh=dTVxdDA1dHFidTB0",
@@ -31,10 +33,14 @@ def start(message):
     user_id = message.from_user.id
     if not check_sub(user_id):
         markup = types.InlineKeyboardMarkup()
-        for ch in channels:
-            markup.add(types.InlineKeyboardButton(f"Obuna bo'lish: {ch}", url=ch))
+        # === 2. Telegram tugmalarini yaratishda to‘g‘ri URL ishlating
+for ch in channels:
+    # @ belgisini olib tashlab linkga aylantiramiz
+    channel_link = f"https://t.me/{ch.lstrip('@')}"
+    markup.add(types.InlineKeyboardButton(f"📢 Obuna bo'lish", url=channel_link))
+
         for link in external_links:
-            markup.add(types.InlineKeyboardButton("📷 Instagram", url=link))    
+            markup.add(types.InlineKeyboardButton("📢 Obuna bo'lish", url=link))    
         markup.add(types.InlineKeyboardButton("✅ Tekshirish", callback_data="check"))
         bot.send_message(user_id, "📌 Iltimos, quyidagi kanallarga obuna bo'ling va tekshiring.", reply_markup=markup)
     else:
