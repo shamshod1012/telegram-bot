@@ -6,9 +6,9 @@ from telebot import types
 BOT_TOKEN = '7808954491:AAE7vqeM4esMKv2S6SLhdsDyG-i-20FOMjQ'
 bot = telebot.TeleBot(BOT_TOKEN)
 
-admin_ids = [1225264753]  # bu yerga adminlar ID sini yozing
+admin_ids = [YOUR_ADMIN_ID]  # bu yerga adminlar ID sini yozing
 channels = ['@MuXa_pro_uzakaunt']  # majburiy obuna kanallar ro'yxati
-kino_dict = {}  # kinolar ro'yxati {"1": "file_id", ...}
+kino_dict = {}  # kinolar ro'yxati {"1": {"file_id": ..., "caption": ...}, ...}
 
 # === Obuna tekshiruv ===
 def check_sub(user_id):
@@ -45,12 +45,18 @@ def callback_check(call):
 # === Kino yuborish ===
 @bot.message_handler(func=lambda message: message.text.isdigit())
 def yubor_kino(message):
+    user_id = message.from_user.id
+    if not check_sub(user_id):
+        start(message)
+        return
+
     kod = message.text.strip()
     if kod in kino_dict:
-        file_id = kino_dict[kod]
+        file_id = kino_dict[kod]['file_id']
+        caption = kino_dict[kod].get('caption', '')
         try:
             bot.send_chat_action(message.chat.id, 'upload_video')
-            bot.send_video(message.chat.id, file_id)
+            bot.send_video(message.chat.id, file_id, caption=caption)
         except Exception as e:
             bot.send_message(message.chat.id, f"⚠️ Fayl yuborishda xatolik: {str(e)}")
     else:
@@ -66,16 +72,21 @@ def notogri_kiritish(message):
 def qoshish_video(message):
     if message.from_user.id in admin_ids:
         bot.send_message(message.chat.id, "✅ Video qabul qilindi. Endi unga raqam belgilang (masalan: 4)")
-        bot.register_next_step_handler(message, lambda msg: saqlash_video(msg, message.video.file_id))
+        bot.register_next_step_handler(message, lambda msg: qabul_raqam(msg, message.video.file_id))
     else:
         bot.send_message(message.chat.id, "❌ Siz admin emassiz.")
 
-def saqlash_video(message, file_id):
+def qabul_raqam(message, file_id):
     kod = message.text.strip()
     if kod.isdigit():
-        kino_dict[kod] = file_id
-        bot.send_message(message.chat.id, f"✅ Kino {kod}-raqam bilan saqlandi.")
+        bot.send_message(message.chat.id, "✍️ Endi kino uchun izoh kiriting:")
+        bot.register_next_step_handler(message, lambda msg: saqlash_video(kod, file_id, msg))
     else:
         bot.send_message(message.chat.id, "❌ Iltimos, faqat raqam kiriting.")
+
+def saqlash_video(kod, file_id, message):
+    caption = message.text.strip()
+    kino_dict[kod] = {"file_id": file_id, "caption": caption}
+    bot.send_message(message.chat.id, f"✅ Kino {kod}-raqam va izoh bilan saqlandi.")
 
 bot.infinity_polling()
