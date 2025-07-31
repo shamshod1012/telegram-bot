@@ -81,4 +81,4 @@ def yubor_kino(message):
 def notogri_kiritish(message):
     bot.send_message(message.chat.id, "📌 Iltimos, faqat kino raqamini kiriting (masalan: 1 yoki 2)")
 
-bot.polling()
+ bot.infinity_polling()
