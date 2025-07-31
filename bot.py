@@ -7,7 +7,7 @@ BOT_TOKEN = '7808954491:AAE7vqeM4esMKv2S6SLhdsDyG-i-20FOMjQ'
 bot = telebot.TeleBot(BOT_TOKEN)
 
 admin_ids = [7770409627, 1225264753]  # bu yerga adminlar ID sini yozing
-channels = ['@MuXa_pro_uzakaunt']  # majburiy obuna kanallar ro'yxati
+channels = ['https://t.me/MuXa_pro_uzakaunt', "https://t.me/somethingcoolOk", "https://www.instagram.com/tarjima_kinolar02?igsh=dTVxdDA1dHFidTB0", "https://www.instagram.com/1slomov_030?igsh=ZmJhdWl4NTBzZjB0"]  # majburiy obuna kanallar ro'yxati
 kino_dict = {}  # kinolar ro'yxati {"1": {"file_id": ..., "caption": ...}, ...}
 
 # === Obuna tekshiruv ===
@@ -28,7 +28,7 @@ def start(message):
     if not check_sub(user_id):
         markup = types.InlineKeyboardMarkup()
         for ch in channels:
-            markup.add(types.InlineKeyboardButton(f"Obuna bo'lish: {ch}", url=f"https://t.me/{ch[1:]}") )
+            markup.add(types.InlineKeyboardButton(f"Obuna bo'lish: {ch}", url=fch[1:]) )
         markup.add(types.InlineKeyboardButton("✅ Tekshirish", callback_data="check"))
         bot.send_message(user_id, "📌 Iltimos, quyidagi kanallarga obuna bo'ling va tekshiring.", reply_markup=markup)
     else:
