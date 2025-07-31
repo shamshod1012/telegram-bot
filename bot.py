@@ -28,7 +28,7 @@ def start(message):
         markup.add(types.InlineKeyboardButton("Instagram kanalga a'zo bo'lish (1)", url="https://www.instagram.com/tarjima_kinolar02"))
         markup.add(types.InlineKeyboardButton("Instagram kanalga a'zo bo'lish (1)", url="https://www.instagram.com/1slomov_030"))
         markup.add(types.InlineKeyboardButton("✅ Tasdiqlash", callback_data="check"))
-        
+
         text = (
             "❌ Botdan foydalanish uchun quyidagi Telegram kanalga a'zo bo'lishingiz shart:\n\n"
             "🔗 @MuXa_pro_uzakaunt\n\n"
@@ -48,8 +48,6 @@ def callback_check(call):
     else:
         bot.send_message(user_id, "❗ Siz hali ham Telegram kanalga a'zo bo‘lmagansiz.")
 
-
-
 # 🔢 Kod va fayl nomlari lug‘ati
 kino_dict = {
     "1": "kino1.mp4",
@@ -61,7 +59,6 @@ kino_dict = {
 @bot.message_handler(func=lambda message: message.text.isdigit())
 def yubor_kino(message):
     kod = message.text.strip()
-    
     if kod in kino_dict:
         fayl_nomi = kino_dict[kod]
         if os.path.exists(fayl_nomi):
@@ -81,4 +78,6 @@ def yubor_kino(message):
 def notogri_kiritish(message):
     bot.send_message(message.chat.id, "📌 Iltimos, faqat kino raqamini kiriting (masalan: 1 yoki 2)")
 
- bot.infinity_polling()
+# 🟢 Botni ishga tushirish
+if __name__ == '__main__':
+    bot.infinity_polling()
