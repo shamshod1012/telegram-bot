@@ -6,7 +6,7 @@ from telebot import types
 BOT_TOKEN = '7808954491:AAE7vqeM4esMKv2S6SLhdsDyG-i-20FOMjQ'
 bot = telebot.TeleBot(BOT_TOKEN)
 
-admin_ids = [YOUR_ADMIN_ID]  # bu yerga adminlar ID sini yozing
+admin_ids = [7770409627, 1225264753]  # bu yerga adminlar ID sini yozing
 channels = ['@MuXa_pro_uzakaunt']  # majburiy obuna kanallar ro'yxati
 kino_dict = {}  # kinolar ro'yxati {"1": {"file_id": ..., "caption": ...}, ...}
 
